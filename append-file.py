@@ -1,5 +1,5 @@
 source = open('textfile.txt', 'r')
-target = open('textfile3.txt', 'a')
+target = open('output/appendOutput.txt', 'a')
 
 contentLines = source.readlines()
 content = [i.rstrip('\n') for i in contentLines]
