@@ -10,19 +10,20 @@ output = 'output/'
 ext = '.txt'
 
 
-def get_time_stamp():
+def get_time_stamp(addTime):
     now = datetime.datetime.now()
-    ms = now.strftime('-%f')[0:4]
-    return now.strftime('%Y-%m-%d %Hh%mm%S') + ms
+    stamp = now.strftime('%Y-%m-%d')
+    if addTime:
+        return '%s %s_%s' % (stamp, now.strftime('%Hh%Mm%S'), now.strftime('%f')[0:3])
+    return stamp
 
 
-# Creates an empty file
 def create_file(name):
-    """This function creates an empty file."""
-    name = name + ' ' + get_time_stamp()
-    with open(output + name + ext, 'w') as file:
-        file.write("")
+    with open(output + name + ext, 'a') as file:
+        file.write('>> Started at: %s\n' % get_time_stamp(True))
+        for i in range(5):
+            file.write('timestamp%d: %s\n' % (i+1, get_time_stamp(True)))
+            time.sleep(1)
+        file.write('\n')
 
-for i in range(5):
-    create_file('sample' + str(i+1))
-    time.sleep(1)
+create_file('date-time ' + get_time_stamp(False))
